@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深拷贝</title>
+</head>
+<body>
+    <script>
+
+
+        const aaa = [
+            {
+                'aa':'as',
+                'sa':[123,'saxc'],
+                function(){console.log(123);}
+            },
+            null,
+            [
+                new Map([['a',1],['b',2]]),
+                new Set([1,2,{'name':123}])
+            ]
+        ]
+
+        const bbb = deepClone(aaa)
+
+        function deepClone(obj){
+            if(typeof(obj) !== 'object' || obj === null){
+                return obj
+            }
+
+            let temp
+            if(obj instanceof Map){
+                temp = new Map()
+                obj.forEach((val, key)=>{
+                    temp.set(key,deepClone(val))
+                })
+            }
+            else if(obj instanceof Set){
+                temp = new Set()
+                obj.forEach((val)=>{
+                    temp.add(deepClone(val))
+                })
+            }
+            else{
+                temp = new obj.constructor()
+                for(const i in obj){
+                    temp[i] = deepClone(obj[i]) 
+                }
+            }
+            return temp
+        }
+    </script>
+</body>
+</html>
