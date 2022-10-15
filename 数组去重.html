@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <span>indexof</span>
+    <div class="test1"></div>
+    <span>includes</span>
+    <div class="test2"></div>
+    <span>splice</span>
+    <div class="test3"></div>
+    <span>sort</span>
+    <div class="test4"></div>
+    <span>set</span>
+    <div class="test5"></div>
+    <span>map</span>
+    <div class="test6"></div>
+
+    <script>
+
+        const unique_indexof = function (oldArr) {
+            let newArr = [];    //定义一个临时数组来存储不重复的元素
+            for (let i = 0; i < oldArr.length; i++) {
+                //循环遍历当前数组 
+                //判断oldArr数组中下标为i的元素是否已经保存到临时数组newArr中
+                //如果已保存，则跳过，否则将此元素保存到临时数组中 
+                if (newArr.indexOf(oldArr[i]) == -1) {
+                    newArr.push(oldArr[i]);
+                }
+            }
+            return newArr;
+        }
+
+        const unique_includes = function (oldArr) {
+            let newArr = [];    //定义一个临时数组来存储不重复的元素
+            for (let i = 0; i < oldArr.length; i++) {
+                //循环遍历当前数组 
+                //判断oldArr数组中下标为i的元素是否已经保存到临时数组newArr中
+                //如果存在，则跳过，否则将此元素保存到临时数组中 
+                if (!newArr.includes(oldArr[i])) {
+                    newArr.push(oldArr[i]);
+                }
+            }
+            return newArr;
+        }
+
+        const unique_splice = function (arr) {
+            for (let i = 0; i < arr.length; i++) {
+                for (let j = i + 1; j < arr.length; j++) {
+                    if (arr[i] === arr[j]) {
+                        //第一个等同于第二个，splice方法删除第二个
+                        arr.splice(j, 1);
+                        j--;
+                    }
+                }
+            }
+            return arr;
+        }
+
+        const unique_sort = function (oldArr) {
+            oldArr.sort();
+            let newArr = [oldArr[0]];
+            for (let i = 1; i < oldArr.length; i++) {
+                if (oldArr[i] !== oldArr[i - 1]) {
+                    newArr.push(oldArr[i]);
+                }
+            }
+            return newArr;
+        }
+
+        const unique_set = function (arr) {
+            // Array.from()是一个初始化数组的方法
+            // Array.from()是可以将Set,Map转化位数组
+            // return Array.from( new Set(arr) );
+            // ...扩展符也可以将Set转化为数组
+            return [...new Set(arr)];
+        }
+
+        const unique_map = function (oldArr) {
+            let map = new Map();
+            let newArr = new Array();  // 数组用于返回结果
+            for (let i = 0; i < oldArr.length; i++) {
+                if (map.has(oldArr[i])) {
+                    map.set(oldArr[i], true);
+                } else {
+                    map.set(oldArr[i], false);
+                    newArr.push(oldArr[i]);
+                }
+            }
+            return newArr;
+        }
+
+        const testArr = [1, 1, 0, 1, 0, 15, 15, 'a', 'a', 'true', 'true', true, true, false, false, undefined, undefined, null, null, NaN, NaN, 'NaN', 'NaN', {}, {}, { "username": "zc" }, { "username": "zc" }]
+        const testArr0 = [1, 1, 0, 1, 0, 15, 15, 'a', 'a', 'true', 'true', true, true, false, false, undefined, undefined, null, null, NaN, NaN, 'NaN', 'NaN', {}, {}, { "username": "zc" }, { "username": "zc" }]
+
+        const test1 = document.querySelector('.test1')
+        const test2 = document.querySelector('.test2')
+        const test3 = document.querySelector('.test3')
+        const test4 = document.querySelector('.test4')
+        const test5 = document.querySelector('.test5')
+        const test6 = document.querySelector('.test6')
+
+        test1.innerHTML = unique_indexof(testArr)
+        test2.innerHTML = unique_includes(testArr)
+
+        const spliceArr = unique_splice(testArr0)
+        test3.innerHTML = spliceArr
+        test4.innerHTML = unique_sort(testArr)
+        test5.innerHTML = unique_set(testArr)
+        test6.innerHTML = unique_map(testArr)
+
+        console.log(testArr);
+        console.log(unique_indexof(testArr));
+        console.log(unique_includes(testArr));
+        console.log(spliceArr);
+        console.log(unique_sort(testArr));
+        console.log(unique_set(testArr));
+        console.log(unique_map(testArr));
+    </script>
+</body>
+
+</html>
